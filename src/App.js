@@ -18,19 +18,23 @@ const initialList = [
 
 function App() {
   const [list, setList] = useState (initialList);
+  const [name, setName] = useState ('');
 
   const handleChange = (event) => {
-
+     setName (event.target.value);
   };
 
-  const handleAdd = (event) => {};
+  const handleAdd = (event) => {
+    const newList = list.concat ( {name});
+    setList ( newList );
+  };
 
   return (
     <div className="App">
       <h1> We want to manipulate list </h1>
       <div>
-        <input type="text" id="list" placeholder="add to list" />
-        <button type="button">Add</button>
+        <input type="text" id="list" placeholder="add to list" value={name} onChange={handleChange} />
+        <button type="button" onClick={handleAdd}>Add</button>
       </div>
       <ul>
         {list.map ( (item) => {
