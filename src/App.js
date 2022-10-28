@@ -42,6 +42,14 @@ const AddItem = ( {value, onChange, onClick}) => {
   );
 };
 
+const Button = ( {onClick, type="button", children}) => {
+  return (
+    <button onClick={onClick} type={type}>
+      {children}
+    </button>
+  );
+};
+
 const List = ( {list} ) => {
   return (
     <ul>
