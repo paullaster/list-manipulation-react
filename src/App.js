@@ -7,9 +7,10 @@ import './App.css';
 const listReducer = (state, action) => {
   switch (action.type) {
     case 'ADD_ITEM':
-      return (
-        state.concat ( {name: action.name, ID: action.id})
-      );
+      return {
+        ...state,
+        list: state.list.concat ( {name: action.name, ID: action.id})
+      };
     default:
       throw new Error ( 'Invalid action type: ' + action.type);
   }
@@ -64,9 +65,12 @@ const Item = ( {item} ) => {
 }
 
 const App = () => {
-  const [list, dispatchList] = useReducer (
+  const [listData, dispatchList] = useReducer (
     listReducer,
-    initialList
+    {
+      list: initialList,
+      isShowList: true,
+    }
     );
   const [name, setName] = useState ('');
 
@@ -88,7 +92,7 @@ const App = () => {
       onClick={handleAdd} />
 
       <List
-       list={list}
+       list={listData.list}
        />
     </div>
   );
