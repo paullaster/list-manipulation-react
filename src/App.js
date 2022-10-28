@@ -1,6 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState, useReducer} from 'react';
 import { v4 as uuidv4} from 'uuid';
 import './App.css';
+
+
+//Reducer functions
+const listReducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD_ITEM':
+      return (
+        state.concat ( {name: action.name, ID: action.id})
+      );
+    default:
+      throw new Error ( 'Invalid action type: ' + action.type);
+  }
+};
 
 const initialList = [
   {
@@ -28,15 +41,13 @@ const AddItem = ( {value, onChange, onClick}) => {
   );
 };
 
-const List = ( {list, children} ) => {
+const List = ( {list} ) => {
   return (
     <ul>
       {
         list.map ( (item) => {
           return (
-            <React.Fragment>
-              
-            </React.Fragment>
+            <Item key={item.ID} item={item} />
           );
         })
       }
@@ -53,7 +64,10 @@ const Item = ( {item} ) => {
 }
 
 const App = () => {
-  const [list, setList] = useState (initialList);
+  const [list, dispatchList] = useReducer (
+    listReducer,
+    initialList
+    );
   const [name, setName] = useState ('');
 
   const handleChange = (event) => {
@@ -61,8 +75,7 @@ const App = () => {
   };
 
   const handleAdd = (event) => {
-    const newList = list.concat ( {name, ID: uuidv4});
-    setList ( newList );
+    dispatchList ( {tpye: 'ADD_ITEM', name, ID: uuidv4 ()});
 
     setName ('');
   };
