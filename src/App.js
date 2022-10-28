@@ -17,7 +17,13 @@ const initialList = [
   }
 ];
 
-function App() {
+const AddItem = ( {value, onChange, onClick}) => {
+  
+};
+
+const List = () => {};
+
+const App = () => {
   const [list, setList] = useState (initialList);
   const [name, setName] = useState ('');
 
@@ -35,17 +41,14 @@ function App() {
   return (
     <div className="App">
       <h1> We want to manipulate list </h1>
-      <div>
-        <input type="text" id="list" placeholder="add to list" value={name} onChange={handleChange} />
-        <button type="button" onClick={handleAdd}>Add</button>
-      </div>
-      <ul>
-        {list.map ( (item) => {
-          return (
-            <li className='list-item' key={item.ID}>{item.name}</li>
-          )
-        })}
-      </ul>
+      <AddItem
+      value={name}
+      onChange={handleChange}
+      onClick={handleAdd} />
+
+      <List
+       list={list}
+       />
     </div>
   );
 }
