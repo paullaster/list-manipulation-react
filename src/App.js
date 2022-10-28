@@ -75,8 +75,7 @@ const App = () => {
   };
 
   const handleAdd = (event) => {
-    dispatchList ( {tpye: 'ADD_ITEM', name, ID: uuidv4 ()});
-
+    dispatchList ( {type: 'ADD_ITEM', name, id: uuidv4 ()});
     setName ('');
   };
 
