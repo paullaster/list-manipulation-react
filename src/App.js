@@ -11,6 +11,11 @@ const listReducer = (state, action) => {
         ...state,
         list: state.list.concat ( {name: action.name, ID: action.id})
       };
+    case 'DELETE_ITEM':
+      return {
+        ...state,
+        list: state.list.filter ( item => item.ID !== action.id)
+      }
     default:
       throw new Error ( 'Invalid action type: ' + action.type);
   }
@@ -95,7 +100,7 @@ const App = () => {
   };
 
   const handleRemove = (id) => {
-    console.log (id);
+    dispatchList ( {type: 'DELETE_ITEM', id});
   };
 
   return (
