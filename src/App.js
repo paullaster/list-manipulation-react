@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { v4 as uuidv4} from 'uuid';
 import './App.css';
 
 const initialList = [
@@ -25,8 +26,10 @@ function App() {
   };
 
   const handleAdd = (event) => {
-    const newList = list.concat ( {name});
+    const newList = list.concat ( {name, ID: uuidv4});
     setList ( newList );
+
+    setName ('');
   };
 
   return (
