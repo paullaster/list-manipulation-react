@@ -19,15 +19,15 @@ const listReducer = (state, action) => {
 const initialList = [
   {
     name: 'Kennedy',
-    ID: 1,
+    ID: uuidv4 (),
   },
   {
     name: 'John',
-    ID: 2,
+    ID: uuidv4 (),
   },
   {
     name: 'Phonfred',
-    ID: 3,
+    ID: uuidv4 (),
   }
 ];
 
@@ -35,9 +35,9 @@ const AddItem = ( {value, onChange, onClick}) => {
   return (
     <React.Fragment>
       <input value={value} onChange={onChange} />
-      <button type="button" onClick={onClick}>
+      <Button type="button" onClick={onClick}>
         Add
-      </button>
+      </Button>
     </React.Fragment>
   );
 };
@@ -50,13 +50,13 @@ const Button = ( {onClick, type="button", children}) => {
   );
 };
 
-const List = ( {list} ) => {
+const List = ( {list, remove} ) => {
   return (
     <ul>
       {
         list.map ( (item) => {
           return (
-            <Item key={item.ID} item={item} />
+              <Item key={item.ID} item={item} remove={remove}/>
           );
         })
       }
@@ -64,10 +64,13 @@ const List = ( {list} ) => {
   );
 };
 
-const Item = ( {item} ) => {
+const Item = ( {item, remove} ) => {
   return (
     <li className='list-item'>
       {item.name}
+      <Button onClick={ () =>remove (item.ID)}>
+                Remove Item
+      </Button>
     </li>
   );
 }
@@ -91,6 +94,10 @@ const App = () => {
     setName ('');
   };
 
+  const handleRemove = (id) => {
+    console.log (id);
+  };
+
   return (
     <div className="App">
       <h1> We want to manipulate list </h1>
@@ -101,6 +108,7 @@ const App = () => {
 
       <List
        list={listData.list}
+       remove={handleRemove}
        />
     </div>
   );
