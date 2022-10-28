@@ -18,10 +18,39 @@ const initialList = [
 ];
 
 const AddItem = ( {value, onChange, onClick}) => {
-  
+  return (
+    <React.Fragment>
+      <input value={value} onChange={onChange} />
+      <button type="button" onClick={onClick}>
+        Add
+      </button>
+    </React.Fragment>
+  );
 };
 
-const List = () => {};
+const List = ( {list, children} ) => {
+  return (
+    <ul>
+      {
+        list.map ( (item) => {
+          return (
+            <React.Fragment>
+              
+            </React.Fragment>
+          );
+        })
+      }
+    </ul>
+  );
+};
+
+const Item = ( {item} ) => {
+  return (
+    <li className='list-item'>
+      {item.name}
+    </li>
+  );
+}
 
 const App = () => {
   const [list, setList] = useState (initialList);
