@@ -16,20 +16,22 @@ const listReducer = (state, action) => {
         ...state,
         list: state.list.filter ( item => item.ID !== action.id)
       };
-    case 'UPDATE_ITEM':
+    case 'UPDATE_ITEM':{
+      const newList = state.list.map ( (item) => {
+        if (item.ID === action.id) {
+          const updatedItem = {
+            ...item,
+            isRelative: !item.isRelative,
+          };
+          return updatedItem;
+        }
+        return item;
+      });
       return {
         ...state,
-        list: state.list.map ( (item) => {
-          if ( item.ID === action.id) {
-            const updatedItem = {
-              ...item,
-              isRelative: !item.isRelative
-            };
-            return updatedItem;
-          }
-          return item;
-        })
+        list: newList
       }  
+    }
     default:
       throw new Error ( 'Invalid action type: ' + action.type);
   }
