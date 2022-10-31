@@ -15,7 +15,21 @@ const listReducer = (state, action) => {
       return {
         ...state,
         list: state.list.filter ( item => item.ID !== action.id)
-      }
+      };
+    case 'UPDATE_ITEM':
+      return {
+        ...state,
+        list: state.list.map ( (item) => {
+          if ( item.ID === action.id) {
+            const updatedItem = {
+              ...item,
+              isRelative: !item.isRelative
+            };
+            return updatedItem;
+          }
+          return item
+        })
+      }  
     default:
       throw new Error ( 'Invalid action type: ' + action.type);
   }
@@ -24,14 +38,17 @@ const listReducer = (state, action) => {
 const initialList = [
   {
     name: 'Kennedy',
+    isRelative: false,
     ID: uuidv4 (),
   },
   {
     name: 'John',
+    isRelative: false,
     ID: uuidv4 (),
   },
   {
     name: 'Phonfred',
+    isRelative: true,
     ID: uuidv4 (),
   }
 ];
@@ -55,13 +72,13 @@ const Button = ( {onClick, type="button", children}) => {
   );
 };
 
-const List = ( {list, remove} ) => {
+const List = ( {list, remove, onUpdate} ) => {
   return (
     <ul>
       {
         list.map ( (item) => {
           return (
-              <Item key={item.ID} item={item} remove={remove}/>
+              <Item key={item.ID} item={item} remove={remove} onUpdate={onUpdate}/>
           );
         })
       }
@@ -69,13 +86,18 @@ const List = ( {list, remove} ) => {
   );
 };
 
-const Item = ( {item, remove} ) => {
+const Item = ( {item, remove, onUpdate} ) => {
   return (
     <li className='list-item'>
       {item.name}
-      <Button onClick={ () =>remove (item.ID)}>
-                Remove Item
-      </Button>
+      <React.Fragment>
+        <Button onClick={ () =>remove (item.ID)}>
+                  Remove Item
+        </Button>
+        <Button onClick={ () =>onUpdate (item.ID)} >
+                  {item.isRelative ? 'Yes' : 'No'}
+        </Button>
+      </React.Fragment>
     </li>
   );
 }
@@ -103,6 +125,9 @@ const App = () => {
     dispatchList ( {type: 'DELETE_ITEM', id});
   };
 
+  const handleUpdate = (id) => {
+    dispatchList ( { type: 'UPDATE_ITEM', name, id})
+  };
   return (
     <div className="App">
       <h1> We want to manipulate list </h1>
@@ -114,6 +139,7 @@ const App = () => {
       <List
        list={listData.list}
        remove={handleRemove}
+       onUpdate={handleUpdate}
        />
     </div>
   );
