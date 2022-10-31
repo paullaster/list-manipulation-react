@@ -27,7 +27,7 @@ const listReducer = (state, action) => {
             };
             return updatedItem;
           }
-          return item
+          return item;
         })
       }  
     default:
@@ -126,7 +126,7 @@ const App = () => {
   };
 
   const handleUpdate = (id) => {
-    dispatchList ( { type: 'UPDATE_ITEM', name, id})
+    dispatchList ( { type: 'UPDATE_ITEM', id})
   };
   return (
     <div className="App">
